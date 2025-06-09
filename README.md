@@ -32,3 +32,7 @@ Chat_bot/
 
 
 # 🚀 Installation
+## 🔧 Prerequisites
+  ### Python 3.13+
+  ### Node.js + npm (20.17.0+)
+  ### Git
