@@ -39,22 +39,22 @@ Chat_bot/
 
 # 🖥️ Backend Setup (FastAPI)
 ## 1.Clone the Repository
-git clone https://github.com/16Brijesh10/Chat_bot.git
-cd Chat_bot/backend
+#### git clone https://github.com/16Brijesh10/Chat_bot.git
+#### cd Chat_bot/backend
 
 ## 2.Create Virtual Environment
-python -m venv venv
-source venv/bin/activate   # On Windows: venv\Scripts\activate
+#### python -m venv venv
+#### source venv/bin/activate   # On Windows: venv\Scripts\activate
 
 ## 3.Install Dependencies
-pip install -r requirements.txt
+#### pip install -r requirements.txt
 
 ## 4.Add PDF Documents
-Place your HR PDFs in the backend/data/ folder.
+#### Place your HR PDFs in the backend/data/ folder.
 
 ## 5.Run the Backend
-uvicorn main:app --reload
-if vritual environment use -
-pipenv run uvicorn main:app --reload
+#### uvicorn main:app --reload
+### if vritual environment use -
+#### pipenv run uvicorn main:app --reload
 
 
