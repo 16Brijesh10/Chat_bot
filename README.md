@@ -9,3 +9,26 @@
 
 ### 📚 Backend uses LangChain + Gemini for document-aware chat
 
+# 📂 Project Structure
+Chat_bot/
+├── backend/
+│   ├── main.py
+│   ├── load_data.py
+│   └── ...
+├── frontend/
+│   ├── src/
+│   └── ...
+├── data/
+│   └── hr_document.pdf
+└── README.md
+
+# 🛠️ Tech Stack
+| Layer    | Technology            |
+| -------- | --------------------- |
+| Backend  | FastAPI (Python 3.13) |
+| Frontend | ReactJS (npm 20.17.0) |
+| LLM      | Gemini via LangChain  |
+| Data     | Local HR PDFs         |
+
+
+# 🚀 Installation
