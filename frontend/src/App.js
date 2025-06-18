@@ -4,7 +4,7 @@ import HistorySidebar from './HistorySidebar';
 import { getHistoryByDate } from './api';
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "firebase/auth";
 import './App.css';
-import './firebase'; // Make sure Firebase is initialized in this file
+import './firebase'; // Make sure Firebase is initialized in this files
 
 function App() {
   const [messages, setMessages] = useState([]);
