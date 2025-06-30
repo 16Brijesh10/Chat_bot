@@ -20,6 +20,7 @@
 .app-layout {
   display: flex;
   height: 100vh;
+  overflow: auto;
 }
 
 .main-chat {
@@ -116,4 +117,57 @@ h1 {
   padding: 8px 14px;
   border-radius: 5px;
   cursor: pointer;
+}
+/* LIGHT MODE */
+.app-layout.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.app-layout.light .chat-container {
+  background-color: #f9f9f9;
+}
+
+.app-layout.light input,
+.app-layout.light button {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* DARK MODE */
+.app-layout.dark {
+  background-color: #353030;
+  color: #ffffff;
+}
+
+.app-layout.dark .chat-container {
+  background-color: #353030;
+}
+
+.app-layout.dark input,
+.app-layout.dark button {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+/* Common Styles */
+.theme-toggle {
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-right: 10px;
+}
+
+.header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-pic {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
 }
