@@ -2,6 +2,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { sendMessage } from './api';
 import './Chat.css';
+import ReactMarkdown from 'react-markdown';
+
 
 function Chat({ messages, setMessages, email, chatId }) {
   const [input, setInput] = useState("");
@@ -42,7 +44,7 @@ function Chat({ messages, setMessages, email, chatId }) {
         {messages.map((msg, i) => (
           <div key={i} className={`message-wrapper ${msg.role}`}>
             <div className={`message ${msg.role}`}>
-              <span>{msg.content}</span>
+            <ReactMarkdown>{msg.content}</ReactMarkdown>
             </div>
           </div>
         ))}
