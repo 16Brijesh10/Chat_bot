@@ -24,5 +24,5 @@ def store_embeddings(docs):
 
 def retrieve_docs(query, vector_db):
     """Retrieve relevant documents from ChromaDB."""
-    retriever = vector_db.as_retriever(search_kwargs={"k": 5})
+    retriever = vector_db.as_retriever(search_kwargs={"k": 20})
     return retriever.invoke(query)
