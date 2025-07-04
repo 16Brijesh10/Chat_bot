@@ -1,19 +1,33 @@
-//API.js
 import axios from 'axios';
 
 const API_URL = "http://localhost:8000";
 
-export const sendMessage = async (message) => {
-    const res = await axios.post(`${API_URL}/chat`, { message });
+// Send user message to backend
+
+export const sendMessage = async (message, email, chatId) => {
+    console.log("Sending message payload:", { message, email, chat_id: chatId });  // ✅ Check this
+    const res = await axios.post(`${API_URL}/chat`, {
+        message,
+        email,
+        chat_id: chatId
+    });
     return res.data.answer;
 };
 
-export const getHistoryByDate = async (date) => {
-    const res = await axios.post(`${API_URL}/history`, { date });
-    return res.data.history;
+
+// Load full chat history by chatId
+export const getHistoryByDate = async (chatId, email) => {
+    const res = await axios.post(`${API_URL}/history`, {
+        chat_id: chatId,
+        email
+    });
+    return res.data;
 };
-// If you want to list available dates
-export const getAvailableDates = async () => {
-    const res = await axios.get(`${API_URL}/history/dates`);
-    return res.data.dates;
+
+// Load all available titles for user
+export const getAvailableTitles = async (email) => {
+    const res = await axios.get(`${API_URL}/history/titles`, {
+        params: { email }
+    });
+    return res.data.titles;
 };
