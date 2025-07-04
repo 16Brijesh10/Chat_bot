@@ -1,8 +1,9 @@
+// Chat.js - Updated to support unique chatId per session
 import React, { useRef, useEffect, useState } from 'react';
 import { sendMessage } from './api';
 import './Chat.css';
 
-function Chat({ messages, setMessages, email }) {
+function Chat({ messages, setMessages, email, chatId }) {
   const [input, setInput] = useState("");
   const chatRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -12,11 +13,17 @@ function Chat({ messages, setMessages, email }) {
     const newMessages = [...messages, { role: "user", content: input }];
     setMessages(newMessages);
     setInput("");
-    setIsLoading(true);  // Start loading
+    setIsLoading(true);
 
-    const response = await sendMessage(input, email);  // ✅ Fixed here
-    setMessages([...newMessages, { role: "assistant", content: response }]);
-    setIsLoading(false); // Stop loading
+    try {
+      const response = await sendMessage(input, email, chatId);
+      setMessages([...newMessages, { role: "assistant", content: response }]);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setMessages([...newMessages, { role: "assistant", content: "Error: Could not get a response." }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleClear = () => {
@@ -27,38 +34,42 @@ function Chat({ messages, setMessages, email }) {
 
   useEffect(() => {
     chatRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, isLoading]);
 
   return (
     <div className="chat-container">
       <div className="chat-messages">
         {messages.map((msg, i) => (
-          <div
-            key={i}
-            className={`message ${msg.role === 'user' ? 'user' : 'bot'}`}
-          >
-            <span>{msg.content}</span>
+          <div key={i} className={`message-wrapper ${msg.role}`}>
+            <div className={`message ${msg.role}`}>
+              <span>{msg.content}</span>
+            </div>
           </div>
         ))}
         {isLoading && (
-          <div className="spinner">
-            <span>🤖 CyberBot is thinking...!!!!!</span>
+          <div className="spinner message-wrapper bot">
+            <div className="message bot">
+              <span>🤖 CyberBot is thinking...!!!!!</span>
+            </div>
           </div>
         )}
         <div ref={chatRef}></div>
       </div>
-      <div className="input-box">
-        <input
-          type="text"
-          placeholder="Type your message..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-        />
-        <button onClick={handleSend}>Send</button>
-      </div>
-      <div className="clear-chat">
-        <button onClick={handleClear}>🗑️ Clear Chat</button>
+      <div className="input-area-wrapper">
+        <div className="input-box">
+          <input
+            type="text"
+            placeholder="Ask CyberBot..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+            disabled={isLoading}
+          />
+          <button onClick={handleSend} disabled={isLoading}>Send</button>
+        </div>
+        <div className="clear-chat">
+          <button onClick={handleClear}>🗑️ Clear Chat</button>
+        </div>
       </div>
     </div>
   );
