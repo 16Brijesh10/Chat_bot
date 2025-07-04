@@ -1,33 +1,38 @@
+/*HistorySidebar.js*/
 import React, { useEffect, useState } from 'react';
-import { getHistoryByDate } from './api';
+import { getAvailableTitles } from './api';
 import './HistorySidebar.css';
 
-function HistorySidebar({ onSelectHistory }) {
-  const [dates, setDates] = useState([]);
+function HistorySidebar({ onSelectHistory, onNewChat, userEmail }) {
+  const [chatList, setChatList] = useState([]);
 
   useEffect(() => {
-    // For demo: generate last 5 days
-    const today = new Date();
-    const lastFive = Array.from({ length: 10 }, (_, i) => {
-      const d = new Date(today);
-      d.setDate(today.getDate() - i);
-      return d.toISOString().split('T')[0];
-    });
-    setDates(lastFive);
+    async function fetchTitles() {
+      try {
+        const data = await getAvailableTitles(userEmail);
+        setChatList(data);
+      } catch (err) {
+        console.error("Error fetching titles", err);
+      }
+    }
+    fetchTitles();
   }, []);
 
   return (
     <div className="history-sidebar">
       <h2>Chat History</h2>
+
       <ul>
-        {dates.map((date) => (
-          <li key={date} onClick={() => onSelectHistory(date)}>
-            {date}
+        <li onClick={onNewChat} style={{ fontWeight: 'bold', color: '#1a73e8' }}>
+          ➕ New Chat
+        </li>
+        {chatList.map(({ chatId, title }) => (
+          <li key={chatId} onClick={() => onSelectHistory(chatId)}>
+            {title.length > 40 ? title.slice(0, 40) + "..." : title}
           </li>
         ))}
       </ul>
     </div>
   );
 }
-
 export default HistorySidebar;
